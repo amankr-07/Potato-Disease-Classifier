@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import numpy as np
 from io import BytesIO
@@ -7,6 +8,15 @@ import requests
 import tensorflow as tf
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 endpoint = "http://localhost:8501/v1/models/potatoes_model:predict"
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
